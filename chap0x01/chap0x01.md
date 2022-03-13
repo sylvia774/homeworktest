@@ -58,8 +58,6 @@
 
     `uname -a`
 
-    ![]()
-    
     ![](img/aliyun uname.png)
 
 
