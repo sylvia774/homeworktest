@@ -20,7 +20,7 @@
 
     `lsb_release -a`
     
-    ![](img/lsb_release -a.png)
+    ![](img/lsb_release.png)
     
     `cat /etc/issue`
     
