@@ -18,18 +18,12 @@
 
   - Ubuntu
 
-    `lsb_release -a`
+    `lsb_release -a`![](img/lsb_release -a.png)
     
-    ![](img/lsb_release -a.png)
+    `cat /etc/issue`![](img/cat etc issue.png)	
     
-    `cat /etc/issue`
-    
-    ![](img/cat etc issue.png)	
-    
-    `cat /etc/os-release`
-    
-    ![](img/cat etc os-release.png)
-
+    `cat /etc/os-release`![](img/cat etc os-release.png)
+  
 - CentOS
 
   `lsb_release -a`
