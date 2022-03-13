@@ -24,11 +24,11 @@
     
     `cat /etc/issue`
     
-    ![](img/cat etc issue.png)	
+    ![](img/cat_etc_issue.png)	
     
     `cat /etc/os-release`
     
-    ![](img/cat etc os-release.png)
+    ![](img/cat_etc_os-release.png)
     
     
 
@@ -36,15 +36,15 @@
 
   `lsb_release -a`
 
-  ![](img/aliyun lsb.png)
+  ![](img/aliyun_lsb.png)
 
   `cat /etc/issue`
 
-  ![](img/aliyun issue.png)
+  ![](img/aliyun_issue.png)
 
   `	cat /etc/os-release`
 
-  ![](img/aliyun os-release.png)
+  ![](img/aliyun_os-release.png)
 
 
 
@@ -54,24 +54,24 @@
 
     `uname -a`
 
-    ![](img/uname -a.png)
+    ![](img/uname_-a.png)
 
   - CentOS
 
     `uname -a`
 
-    ![](img/aliyun uname.png)
+    ![](img/aliyun_uname.png)
 
 
 ### 2.Virtualbox 安装完 Ubuntu 之后新添加的网卡如何实现系统开机自动启用和自动获取 IP？
 
 - 搜索Ubuntu相关网卡设置，选择使用 `ifconfig`口令，没有找到`ifconfig`
 
-  ![](img/ifconfig not found.png)
+  ![](img/ifconfig_not_found.png)
 
   查找发现需要预先安装工具包，于是安装 `sudo apt install net-tools`
 
-  ![](img/install net-tools.png)
+  ![](img/install_net-tools.png)
 
   再次 `ifconfig`，发现已经有三个网卡了
 
@@ -93,11 +93,11 @@
 
   后来修改回NAT也突然成功了，却并没有深究其中原理呢（这两个应该是有关的吧，不然我也不知道怎么解释了）
 
-  ![](img/network setting.png)
+  ![](img/network_setting.png)
 
   退出vim，输入`:q!`成功退出
 
-  ![](img/exit vim.png)
+  ![](img/exit_vim.png)
 
 ### 3.如何使用 `scp` 在「虚拟机和宿主机之间」、「本机和远程 Linux 系统之间」传输文件？
 
@@ -111,7 +111,7 @@ HW老师演示了本机和远程系统间文件的传输，故先从这个开始
 
       在CentOS中根目录创建test01文件
 
-      ![](img/centos test01.png)
+      ![](img/centos_test01.png)
 
       在cmd中连接gitbash
 
@@ -121,11 +121,11 @@ HW老师演示了本机和远程系统间文件的传输，故先从这个开始
 
       `scp root@xxx.xxx.xxx.xxx:/root/xxx ./`拷贝文件到当前目录
 
-      ![](img/scp test01.png)
+      ![](img/scp_test01.png)
 
       check，文件传输成功
 
-      ![](img/check test01.png)
+      ![](img/check_test01.png)
 
     - 传输文件夹
 
@@ -137,21 +137,21 @@ HW老师演示了本机和远程系统间文件的传输，故先从这个开始
 
       `scp -r root@xxx.xxx.xxx.xxx:/root/xxx ./`拷贝文件夹到`desktop`，记住一定加 `-r`
 
-      ![](img/scp -r.png)
+      ![](img/scp_-r.png)
 
       check成功
 
-      ![](img/check test01-dir.png)
+      ![](img/check_test01-dir.png)
 
   - 本机向远程（操作同上，过程简化）
 
       `scp xxx root@xxx.xxx.xxx.xxx:/root/`向CentOS根目录传输文件
 
-    ![](img/scp desktop.png)
+    ![](img/scp_desktop.png)
 
     check ，目录中原本没有此文件，传输后可以查询到，成功
 
-    ![](img/check desktop.ini.png)
+    ![](img/check_desktop.ini.png)
 
 - #### 虚拟机和宿主机之间
 
@@ -159,15 +159,15 @@ HW老师演示了本机和远程系统间文件的传输，故先从这个开始
 
     登陆虚拟机，在`/home/cuc/`目录下创建test02文件和test02-dir文件夹
 
-    ![](img/create test02.png)
+    ![](img/create_test02.png)
 
     在本机gitbash上操作`scp` test02，test02-dir
 
-    ![](img/scp test02.png)
+    ![](img/scp_test02.png)
 
     check Desktop，成功
 
-    ![](img/check test02.png)
+    ![](img/check_test02.png)
 
   - 宿主机向虚拟机传输文件
 
@@ -175,15 +175,15 @@ HW老师演示了本机和远程系统间文件的传输，故先从这个开始
 
     `rm -rf xxx/`
 
-    ![](img/delete test02.png)
+    ![](img/delete_test02.png)
 
     在宿主机Desktop目录中找到刚接收的文件`scp`传输到虚拟机中
 
-    ![](img/scp test02 desktop.png)
+    ![](img/scp_test02_desktop.png)
 
     check，虚拟机目录中可以查找到，成功
 
-    ![](img/check test02 cuc.png)
+    ![](img/check_test02_cuc.png)
 
 ### 4.如何配置 SSH 免密登录？
 
@@ -213,9 +213,9 @@ HW老师演示了本机和远程系统间文件的传输，故先从这个开始
 
 - 在CentOS与本机gitbash传输文件的时候遇到问题，使用`scp`命令传输文件时显示`permission denied`
 
-  ![](img/permission denied.png)查看教程使用`chmod -R 777 /root`也没用，怎么搞都不行
+  ![](img/permission_denied.png)查看教程使用`chmod -R 777 /root`也没用，怎么搞都不行
 
-  ![](img/chmod -R 777.png)耗了快半小时云平台使用时间不够了只能结束重开，在新环境中重头再来一遍，就莫名其妙成功了，一模一样的操作（我认为一模一样，因为我输了很多遍都不行，在新环境第一次就成功了，当然可能是因为操作不一样但是我确实没看出来)
+  ![](img/chmod_-R_777.png)耗了快半小时云平台使用时间不够了只能结束重开，在新环境中重头再来一遍，就莫名其妙成功了，一模一样的操作（我认为一模一样，因为我输了很多遍都不行，在新环境第一次就成功了，当然可能是因为操作不一样但是我确实没看出来)
 
   现在我都没明白这个问题到底为什么出现又怎么解决了，因为出现突然结束也突然。。希望师哥师姐如果知道可以为我解答一下
 
@@ -227,7 +227,11 @@ HW老师演示了本机和远程系统间文件的传输，故先从这个开始
 
 - 使用了Typora的点击图片插入，导致全部是绝对路径，知道应该使用相对路径于是每次使用都将前面的路径删除了，万万没想到绝对路径和相对路径的斜杠方向好像是反的，在本地可以显示，push到GitHub上之后就全部无法显示了，于是再次修改全部图片，记住了，这次把默认设置改成优先使用相对路径了
 
-  ![](img/worry img.png)
+  ![](img/wrong_img.png)
+
+- 上传到GitHub，发现图片有些能看有些不能看见，就不是网络问题，询问老师后排除了因为文件后缀大小写，中英文字符，markdown缩进导致的显示问题，只能够将成功图片与问题图片一一对比，最后发现成功图片都没有空格，于是发现命名有空格的图片无法显示，终于找到问题所在
+
+  ![](img/wrong_name.png)
 
 - 回头来看这次作业其实并不困难，每个问题课上都演示过了，但这这也只是掌握后回想中的轻松，实际上在做的时候压力真的太大了。ddl，一头雾水的专有名词，晦涩难懂的命令，当然最要命的是自己幻想的困难程度给自己带来的无穷压力，我永远不会忘记在咖啡馆欲哭无泪的那个下午。。
 
