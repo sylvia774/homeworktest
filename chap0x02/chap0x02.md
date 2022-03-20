@@ -238,40 +238,7 @@ Linux命令行使用基础：本地实验环境和云实验环境
 
      [![asciicast](https://asciinema.org/a/CZLmPBJ6iWq7eRx3pAR9PdIe3.svg)](https://asciinema.org/a/CZLmPBJ6iWq7eRx3pAR9PdIe3)
 
-   - CentOS
-
-     ```
-     # 执行以下ping命令后终端所有操作被“无视忽略掉”
-     ping www.baidu.com
-     # 使用CTRL-C快捷键组合输入，可以终止该ping进程
-     CTRL-C
-     # 把ping进程放到“后台”执行
-     ping www.baidu.com &
-     # 可以正常操作，但此时终端不断被“涌出”的ping输出结果“污染”
-     # 此时CTRL-C无效
-     CTRL-C
-     # 以下“2连击”可以终止该ping进程
-     fg
-     CTRL-C
-     # 我们再试着把ping进程放到“后台”执行，这一次我们把标准错误输出先重定向到标准输出，然后再把标准输出重定向到“黑洞”文件
-     ping www.baidu.com 1>/dev/null 2>&1 &
-     # 整个世界都清净了，终端不会再被“涌出”的ping输出结果“污染”
-     # 查看进程会发现ping在“后台”一直运行着
-     ps aux | grep ping
-     ping www.cuc.edu.cn 1>/dev/null 2>&1 &
-     #切换到后台
-     fg
-     #进程挂起
-     CTRL-Z 
-     # 杀死所有ping进程
-     killall ping
-     #发现无法杀死挂起进程
-     ps aux | grep ping 
-     #强行结束
-     kill -9 
-     #再次查看
-     ps aux | grep ping 
-     ```
+   - CentOS（此处操作与Ubuntu相同，详细命令省略）
 
      [![asciicast](https://asciinema.org/a/pexNFoLEiY82G5nXcQKV8sn3A.svg)](https://asciinema.org/a/pexNFoLEiY82G5nXcQKV8sn3A)
 
@@ -340,7 +307,7 @@ Linux命令行使用基础：本地实验环境和云实验环境
 
   ![](img/cast.png)
 
-- 在CentOS中使用`rar`时发现无此软件包，网上求证后明白了需要在`rar`官网下载，使用`wget`命令下载网页压缩包https://www.rarlab.com/rar/rarlinux-x64-611.tar.gz，发现错误
+- 在CentOS中使用`rar`时发现无此软件包，网上求证后明白了需要在`rar`官网下载，使用`wget`命令下载网页压缩包https://www.rarlab.com/rar/rarlinux-x64-611.tar.gz ，发现错误
 
   ![](img/wget.png)
 
