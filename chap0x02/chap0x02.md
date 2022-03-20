@@ -280,22 +280,22 @@ Linux命令行使用基础：本地实验环境和云实验环境
 
 ## 实验总结
 
-- | Linux发型版本          | Ubuntu **20.04**                                             | CentOS **7.7**                      |
-  | :--------------------- | :----------------------------------------------------------- | :---------------------------------- |
-  | **安装软件包**         | `apt install`                                                | `yum install`                       |
-  | **卸载软件包**         | `apt purge`                                                  | `yum purge`                         |
-  | **查看软件包安装路径** | `dpkg -L`                                                    | `rpm -qal | grep`                   |
-  | **查找文件名**         | `sudo find ./ -type f -name "*XXX*"`                         | `find ./ -name "*XXX*"`             |
-  | **查找文件内容**       | `sudo grep -r "XXX" ./ --exclude = *.cast`                   | `grep -r 'XXX' ./ --exclude=*.cast` |
-  | **`gzip`解压缩**       | `gzip `                                                           `gzip -dv ` | 相同                                |
-  | **`bzip2`解压缩**      | `bzip2`                                                     `bzip2 -d` | 相同                                |
-  | **`zip`解压缩**        | `zip -r XXX.zip XXX`                             `unzip`     | 相同                                |
-  | **`tar`解压缩**        | `tar -czf XXX.tar.gz XXX`                   `tar -xzf`       | 相同                                |
-  | **`7z(p7zip)`解压缩**  | `p7zip`                                                            `7z x` | 相同，需安装`epel`源再`p7zip`安装包 |
-  | **`rar`解压缩**        | `rar a`                                                       `unrar e ` | 相同，`rar`软件包需要在官网手动下载 |
-  | **CPU信息获取**        | `cat /proc/cpuinfo`                                          | 相同                                |
-  | **内存信息获取**       | `cat /proc/meminfo | grep MemTotal`                          | 相同                                |
-  | **硬盘信息获取**       | `sudo fdisk -l | grep "Disk /dev/sd"`                        | `fdisk -l | grep Disk`              |
+- | Linux发型版本          | Ubuntu **20.04**                           | CentOS **7.7**                      |
+  | :--------------------- | :----------------------------------------- | :---------------------------------- |
+  | **安装软件包**         | `apt install`                              | `yum install`                       |
+  | **卸载软件包**         | `apt purge`                                | `yum remove`                        |
+  | **查看软件包安装路径** | `dpkg -L`                                  | `rpm -qal &#124; grep`              |
+  | **查找文件名**         | `sudo find ./ -type f -name "*XXX*"`       | `find ./ -name "*XXX*"`             |
+  | **查找文件内容**       | `sudo grep -r "XXX" ./ --exclude = *.cast` | `grep -r 'XXX' ./ --exclude=*.cast` |
+  | **`gzip`解压缩**       | `gzip ` <br />`gzip -dv `                  | 相同                                |
+  | **`bzip2`解压缩**      | `bzip2` <br />`bzip2 -d`                   | 相同                                |
+  | **`zip`解压缩**        | `zip -r XXX.zip XXX` <br />`unzip`         | 相同                                |
+  | **`tar`解压缩**        | `tar -czf XXX.tar.gz XXX`<br />`tar -xzf`  | 相同                                |
+  | **`7z(p7zip)`解压缩**  | `p7zip`<br />`7z x`                        | 相同，需安装`epel`源再`p7zip`安装包 |
+  | **`rar`解压缩**        | `rar a`<br />`unrar e `                    | 相同，`rar`软件包需要在官网手动下载 |
+  | **CPU信息获取**        | `cat /proc/cpuinfo`                        | 相同                                |
+  | **内存信息获取**       | `cat /proc/meminfo &#124; grep MemTotal`   | 相同                                |
+  | **硬盘信息获取**       | `sudo fdisk -l &#124; grep "Disk /dev/sd"` | `fdisk -l &#124; grep Disk`         |
 
 - 在CentOS里安装`tshark`软件包发现找不到，名字并未输错，发现并不存在`tshark`单独软件包，而是包含在了`wireshark`里
 
@@ -313,8 +313,22 @@ Linux命令行使用基础：本地实验环境和云实验环境
 
   非认证网页无法下载，但是后面也直接给出了解决方法`use '--no-check-certificate'`，问题很好解决了。
 
-- 第一次使用`asciinema`网站进行录制，感觉很神奇hh，这个工具对于以后的学习提问应该很有帮助
+- 写完作业上传GitHub检查渲染，发现表格显示情况和本地不同，出现错误
 
+  本地Typora
+
+  ![](img/Typora_table.png)
+
+  然而GitHub上却显示的不一样
+
+  ![](img/table.png)
+
+  带着问题搜索了教程后发现是因为命令中的管道符 `|` 和 `markdown` 表格的分隔符相同。
+  这就会造成，解析后的 `markdown` 把管道符错误的识别成单元格的分隔符的情况
+
+  解决方案：使用 html 转义符，竖线 `|` 的 html 转义符为 `&#124;`，将命令改写后显示正常
+
+- 第一次使用`asciinema`网站进行录制，感觉很神奇hh，这个工具对于以后的学习提问应该很有帮助
 - 总的来说，这次作业完成难度并不很高，重在对比两个不同发行版本下，得到相同信息所需操作命令的共同与区别，有很多跟练的地方，步骤也感觉很多，繁琐，但是很好的体会了发行版本不同带来的差别
 
 ## 参考链接
