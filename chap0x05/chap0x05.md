@@ -18,7 +18,7 @@
 
   - VeryNginx （80）
   - Nginx （8080）
-  - Wordpress 4.7 （8081）
+  - WordPress 4.7 （8081）
   - DVWA （8082）
 
 ## 实验要求
@@ -42,22 +42,18 @@
 
 - [VeryNginx](https://github.com/alexazhou/VeryNginx)的Web管理页面仅允许白名单上的访客来源IP，其他来源的IP访问均向访客展示自定义的**友好错误提示信息页面-3**
 
-- 通过定制
-
-  VeryNginx
-
-  的访问控制策略规则实现：
+- 通过定制VeryNginx的访问控制策略规则实现：
 
   - 限制DVWA站点的单IP访问速率为每秒请求数 < 50
-  - 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
+- 限制Wordpress站点的单IP访问速率为每秒请求数 < 20
   - 超过访问频率限制的请求直接返回自定义**错误提示信息页面-4**
-  - 禁止curl访问
+- 禁止curl访问
 
 ## 实验步骤
 
 ### 基本要求
 
-- 在宿主机和虚拟机中修改hosts配置
+- 在宿主机`C:\Windows\System32\drivers\etc\hosts`中修改hosts配置，虚拟机中也要修改
 
   ```
   192.168.56.101 vn.sec.cuc.edu.cn
@@ -78,51 +74,40 @@
   sudo apt install nginx
   ```
 
-- PHP-FPM进程的反向代理配置
+- PHP-FPM组件安装
 
   ```
-  #安装
   sudo apt install php-fpm php-mysql php-curl php-gd php-intl php-mbstring php-soap php-xml php-xmlrpc php-zip
   ```
-
+  
 - 修改配置文件
 
   ```
   sudo vim /etc/nginx/sites-enabled/default
   
-          root /var/www/html/wp.sec.cuc.edu.cn;
+   root /var/www/html/wp.sec.cuc.edu.cn;
   
-          # Add index.php to the list if you are using PHP
-          index readme.html index.php ;
+   # Add index.php to the list if you are using PHP
+  index readme.html index.php ;
   
-          server_name _;
-  
-          location / {
-                  # First attempt to serve request as file, then
-                  # as directory, then fall back to displaying a 404.
-                  try_files $uri $uri/ =404;
-          }
-  
-          # pass PHP scripts to FastCGI server
-          #
-          location ~ \.php$ {
-          #       include snippets/fastcgi-php.conf;
-          #
-          #       # With php-fpm (or other unix sockets):
-                  fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-                  fastcgi_index index.php;
-                  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                  include fastcgi_params;
-                  # With php-cgi (or other tcp  sockets):
-          #       fastcgi_pass 127.0.0.1:9000;
-          #}
+   location ~ \.php$ {
+   #       include snippets/fastcgi-php.conf;
+   #
+   #       # With php-fpm (or other unix sockets):
+           fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+           fastcgi_index index.php;
+           fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+           include fastcgi_params;
+           # With php-cgi (or other tcp  sockets):
+   #       fastcgi_pass 127.0.0.1:9000;
+   #}
   ```
-
+  
   ![](img/enabled.png)
 
 #### VeryNginx
 
-- 下载依赖
+- 安装依赖
 
   ```
   # zlib
@@ -152,6 +137,7 @@
 - 修改配置文件
 
   ```
+  #修改配置文件
   sudo vim /opt/verynginx/openresty/nginx/conf/nginx.conf
   
   # 将user nginx改成user www-data
@@ -160,21 +146,20 @@
   # 进程权限
   chmod -R 777 /opt/verynginx/verynginx/configs
   
+  #启动 VeryNginx 前关闭 Nginx
+  sudo nginx -s quit/sudo kill -s quit PID
+  
   # 启动
   sudo /opt/verynginx/openresty/nginx/sbin/nginx
   ```
 
-- 测试成功
-
-  ![](img/8080.png)
-
-  在`http://192.168.56.101:8080/verynginx/index.html`页面登录
+- 在`http://192.168.56.101:8080/verynginx/index.html`登录成功
 
   ![](img/login.png)
 
-#### Wordpress
+#### WordPress
 
-- 下载安装Wordpress
+- 安装WordPress
 
   ```
   # 下载安装包
@@ -214,19 +199,19 @@
   exit
   ```
 
-- 修改Wordpress配置文件
+- 创建，编辑`wp-config.php`文件
 
   ```
   cd /var/www/html/wp.sec.cuc.edu.cn/wordpress
   sudo vim wp-config-sample.php
   
-  #修改文件内容完成后，修改文件名
+  #修改数据库信息如图，再修改文件名
   sudo mv wp-config-sample.php wp-config.php
   ```
 
   ![](img/wp-config.png)
 
-- 在Nginx基础上搭建站点
+- 站点配置
 
   ```
   #复制nginx的配置文件
@@ -260,8 +245,8 @@
   # 建立软链接
   sudo ln -s /etc/nginx/sites-available/wp /etc/nginx/sites-enabled/
   
-  # 启动nginx
-  sudo systemctl restart nginx
+  # 重新加载配置文件
+  sudo nginx -s reload
   ```
 
   安装后登陆成功
@@ -269,6 +254,8 @@
   ![](img/set-up.png)
 
 #### DVWA
+
+（与WordPress大致相同）
 
 - 安装
 
@@ -366,19 +353,196 @@
 
   ![](img/dvwalogin.png)
 
-- 
+  ![](img/setup.png)
+
+#### VeryNginx 配置反向代理
+
+- Request Matcher
+
+  ![](img/php-matcher.png)
+
+- Proxy Pass
+
+  ![](img/php-proxypass.png)
 
 ### 安全加固要求
 
+- #### 使用 IP 地址方式均无法访问上述任意站点，并向访客展示自定义的友好错误提示信息页面-1
 
+  - Request Matcher
+
+    ![](img/ip-match.png)
+
+  - Response
+
+    ![](img/ip-response.png)
+
+  - Filter
+
+    ![](img/ip-filter.png)
+
+  - 效果展示
+
+    ![](img/ip-restrict.png)
+
+- #### Damn Vulnerable Web Application (DVWA) 只允许白名单上的访客来源 IP，其他来源的 IP 访问均向访客展示自定义的友好错误提示信息页面-2
+
+  - Request Matcher
+
+    ![](img/dvwa-whitelist.png)
+
+  - Response
+
+    ![](img/error-2.png)
+
+  - Filter
+
+    ![](img/filter-2.png)
+
+  - 效果展示
+
+    正常访问
+
+    ![](img/show-2.png)
+
+    白名单外IP无法访问
+
+    ![](img/show-error-2.png)
+
+- #### 在不升级 Wordpress 版本的情况下，通过定制 VeryNginx 的访问控制策略规则，热修复 WordPress < 4.7.1 - Username Enumeration
+
+  - 点开链接查看`php`代码可知，未修复前可以通过访问`https://wp.sec.cuc.edu.cn/wp-json/wp/v2/users/`获得用户信息
+
+    ![](img/php.png)
+
+  - Request Matcher
+
+    ![](img/wp-repair.png)
+
+  -  Response
+
+    ![](img/wp-repair-response.png)
+
+  -  Filter
+
+    ![](img/wp-repair-filter.png)
+
+  -  效果展示
+
+    ![](img/wp-json.png)
+
+- #### 通过配置 VeryNginx 的 Filter 规则实现对 Damn Vulnerable Web Application (DVWA) 的 SQL 注入实验在低安全等级条件下进行防护
+
+  - 将 DVWA 的安全级别调整为 Low
+
+    ![](img/low-security.png)
+
+  -  防护前`SQl`注入测试
+
+    ![](img/sql-injection.png)
+
+  -  Request Matcher
+
+    ![](img/sql-filter.png)
+
+  -  Filter
+
+    ![](img/sql-filter.png)
+
+  - 效果展示
+
+    ![](img/sql400.png)
 
 ### VeryNginx配置要求
 
+- #### VeryNginx 的 Web 管理页面仅允许白名单上的访客来源 IP，其他来源的 IP 访问均向访客展示自定义的友好错误提示信息页面-3
+
+  - Request Matcher
+
+    ![](img/vn-whitelist-matcher.png)
+
+  - Response
+
+    ![](img/vn-whitelist-response.png)
+
+  - Filter
+
+    ![](img/vn-whitelist-filter.png)
+
+  - 效果展示
+
+    宿主机正常访问
+
+    ![](img/vn-whitelist-host.png)
+
+    白名单外IP无法访问
+
+    ![](img/vn-whitelist-curl.png)
+
+- #### 定制 VeryNginx 的访问控制策略规则
+
+  - 限制站点单IP访问速率
+
+    - Frequency Limit
+
+      ![](img/frequency-limit.png)
+
+    - Response
+
+      ![](img/frequency-response.png)
+
+    - 使用压力测试工具`apache2-utils`测试
+
+      ![](img/requestwp.png)
+
+  - 禁止curl访问
+
+    - Request Matcher
+
+      ![](img/curl-matcher.png)
+
+    - Response
+
+      ![](img/curl-response.png)
+
+    - Filter
+
+      ![](img/curl-filter.png)
+
+    - 效果展示
+
+      ![](img/curl-error.png)
+
 ## 实验总结
 
-- 记得勾选文件查看中的显示隐藏项目，刚开始做作业就麻了，根本找不到hosts文件在哪里，后来发现是被隐藏了
+- 电脑设置记得勾选文件查看中的“显示隐藏的项目”，刚开始做作业修改`hosts`配置人就麻了，因为根本找不到`hosts`文件在哪里，后来发现是被隐藏了😥
+
+  ![](img/invisible.png)
+
+- DVWA页面使用自定义用户名，密码登录成功后，点页面下方`create database`会重定向到登录页面，再次使用之前的用户名登录，却一直显示`login failed`的，以为配置文件出错，怎么修改都不对。参考教程才发现需要输入默认用户名admin和password才能够登录，折腾了很久。不知道为什么要这样做。
+
+  ![](img/login-failed.png)
+
+- 设置无法使用IP地址访问站点，忘记给`VeryNginx`的管理页面配置域名，结果把自己锁在外面了。。
+
+  需要清除`config.json`文件，重启`Nginx`后，在管理页面配置此网站的域名`vn.sec.cuc.edu.cn`，实现不使用IP访问。
+
+  ```
+  sudo rm /opt/verynginx/verynginx/configs/config.json
+  sudo /opt/verynginx/openresty/nginx/sbin/nginx # 重新启动
+  ```
+
+  配置方法与WordPress，DVWA相同，略
+
+  ![](img/vn-php.png)
+
+  后来在配置VeryNginx白名单时错误地将白名单IP配置成了虚拟机网卡IP，宿主机又打不开了。。只有删除`config.json`文件重来，之前作业的配置就全没有了，重新配置了两次，真的好心痛。。😭备份的重要性！
+
+- 添加`Request Matcher`等配置后一定要记得点`save`，而不只是`add`。每次配置好了后没有点`save`就直接测试网页，总是达不到目标效果，花时间修改配置条件无果，最后发现仅仅是因为没有保存，注意细节。
 
 
 ## 参考链接
 
-- 
+- [CUCCS/2021-linux-public-kal1x](https://github.com/CUCCS/2021-linux-public-kal1x/blob/chap0x05/chap0x05/%E7%AC%AC%E4%BA%94%E6%AC%A1%E5%AE%9E%E9%AA%8C.md)
+- [【踩坑】关于设置“使用IP无法访问，并返回自定义错误信息”](http://courses.cuc.edu.cn/course/82669/forum?show_sidebar=false#/topics/290623)
+- [【Nginx】重启报错，端口重复占用无法解决](https://blog.csdn.net/weixin_52269666/article/details/122933619)
