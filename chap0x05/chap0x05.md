@@ -519,7 +519,7 @@
 
   ![](img/invisible.png)
 
-- DVWA页面使用自定义用户名，密码登录成功后，点页面下方`create database`会重定向到登录页面，再次使用之前的用户名登录，却一直显示`login failed`的，以为配置文件出错，怎么修改都不对。参考教程才发现需要输入默认用户名admin和password才能够登录，折腾了很久。不知道为什么要这样做。
+- DVWA页面使用自定义用户名，密码登录成功后，点页面下方`create database`会重定向到登录页面，再次使用之前的用户名登录，却一直显示`login failed`的，以为配置文件出错，怎么修改都不对。参考教程才发现需要输入默认用户名admin和password才能够登录。折腾了一会，不知道原因是什么。
 
   ![](img/login-failed.png)
 
@@ -536,13 +536,15 @@
 
   ![](img/vn-php.png)
 
-  后来在配置VeryNginx白名单时错误地将白名单IP配置成了虚拟机网卡IP，宿主机又打不开了。。只有删除`config.json`文件重来，之前作业的配置就全没有了，重新配置了两次，真的好心痛。。😭备份的重要性！
+  后来在配置VeryNginx白名单时错误地将白名单IP配置成了虚拟机网卡IP，宿主机又打不开VeryNginx页面了。。只有删除`config.json`文件重来，之前作业写的配置就全没有了，重新配置了两次，真的好心痛。。😭备份的重要性！
 
 - 添加`Request Matcher`等配置后一定要记得点`save`，而不只是`add`。每次配置好了后没有点`save`就直接测试网页，总是达不到目标效果，花时间修改配置条件无果，最后发现仅仅是因为没有保存，注意细节。
 
 
 ## 参考链接
 
+- [VeryNginx](https://github.com/alexazhou/VeryNginx/blob/master/readme_zh.md)
+- [WordPress < 4.7.1 - Username Enumeration](https://www.exploit-db.com/exploits/41497/)
 - [CUCCS/2021-linux-public-kal1x](https://github.com/CUCCS/2021-linux-public-kal1x/blob/chap0x05/chap0x05/%E7%AC%AC%E4%BA%94%E6%AC%A1%E5%AE%9E%E9%AA%8C.md)
 - [【踩坑】关于设置“使用IP无法访问，并返回自定义错误信息”](http://courses.cuc.edu.cn/course/82669/forum?show_sidebar=false#/topics/290623)
 - [【Nginx】重启报错，端口重复占用无法解决](https://blog.csdn.net/weixin_52269666/article/details/122933619)
